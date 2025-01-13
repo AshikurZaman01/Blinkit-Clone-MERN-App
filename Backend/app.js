@@ -16,14 +16,15 @@ app.use(cors({
 }))
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'));
 app.use(helmet({
     crossOriginOpenerPolicy: false
 }));
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+
+app.use('/api/v1/user', require('./Routes/UserRoutes/userRoutes'));
+
 
 connectDB().then(() => {
     app.listen(port, () => {
