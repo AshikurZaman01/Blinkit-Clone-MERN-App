@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const dotEnv = require('dotenv');
+const connectDB = require('./DBConfig/DBConn');
 dotEnv.config();
 
 app.use(cors({
@@ -24,7 +25,12 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+connectDB().then(()=>{
+    app.listen(port , ()=>{
+        console.log(`Server is running on port ${port}`);
+
+    })
 })
+
+
 
