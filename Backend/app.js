@@ -25,8 +25,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-connectDB().then(()=>{
-    app.listen(port , ()=>{
+connectDB().then(() => {
+    app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
 
     })
