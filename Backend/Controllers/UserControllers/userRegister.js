@@ -1,5 +1,7 @@
 const bcryptjs = require('bcryptjs');
 const UserModel = require('../../Models/UserSchema/userSchema');
+const sendEmail = require('../sendEmail/sendEmail');
+const verifyEmailTemplate = require('../../Utils/verifyEmailTemplate');
 
 const userRegister = async (req, res) => {
     try {
@@ -32,6 +34,24 @@ const userRegister = async (req, res) => {
             password: hashedPassword
         });
 
+        // Generate Verify Email URL
+        const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${newUser._id}`;
+
+        // Send Verification Email
+        const sendVerifyEmail = await sendEmail(
+            newUser.email,
+            "Verify Your Email",
+            verifyEmailTemplate({ name: newUser.name, url: verifyEmailUrl })
+        );
+
+        // Check if the Email Sending Fails
+        if (!sendVerifyEmail) {
+            return res.status(500).json({
+                success: false,
+                message: "User registered, but verification email failed to send."
+            });
+        }
+
         // Convert user to object and remove password
         const userResponse = newUser.toObject();
         delete userResponse.password;
@@ -39,7 +59,7 @@ const userRegister = async (req, res) => {
         // Send Success Response Without Password
         return res.status(201).json({
             success: true,
-            message: "User registered successfully",
+            message: "User registered successfully. Please check your email to verify your account.",
             user: userResponse
         });
 
