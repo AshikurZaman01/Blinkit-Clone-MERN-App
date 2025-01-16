@@ -4,7 +4,8 @@ const UserModel = require("../../Models/UserSchema/userSchema");
 const verifiedAuth = async (req, res, next) => {
     try {
 
-        const token = req.cookies.AccessToken || req?.header?.authorization.split(" ")[1];
+        const token = req.cookies.AccessToken ||
+            (req.headers.authorization && req.headers.authorization.split(" ")[1]);
         if (!token) {
             return res.status(401).json({ success: false, message: "Unauthorized user." });
         }
@@ -13,12 +14,7 @@ const verifiedAuth = async (req, res, next) => {
         if (!decoded) {
             return res.status(401).json({ success: false, message: "Unauthorized user." });
         }
-
-        const user = await UserModel.findById(decoded.id);
-        if (!user) {
-            return res.status(401).json({ success: false, message: "Unauthorized user." });
-        }
-        req.user = user;
+        req.userId = decoded.id;
         next();
 
     } catch (error) {

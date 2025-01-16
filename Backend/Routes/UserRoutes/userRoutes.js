@@ -4,6 +4,8 @@ const verifyEmail = require('../../Controllers/VerifyEmail/verifyEmail');
 const userLogin = require('../../Controllers/UserControllers/userLogin');
 const userLogout = require('../../Controllers/UserControllers/userLogout');
 const verifiedAuth = require('../../MiddleWear/AuthMiddleware/auth');
+const uploadUserImage = require('../../Controllers/UserControllers/uploadUserImage');
+const upload = require('../../MiddleWear/Multer/multer');
 const router = express.Router();
 
 
@@ -14,6 +16,8 @@ router.post('/userLogin', userLogin);
 router.get('/userLogout', verifiedAuth, userLogout);
 
 router.post('/verifyEmailofUser', verifyEmail);
+
+router.put('/uploadUserImage', verifiedAuth, upload.single('image'), uploadUserImage)
 
 
 module.exports = router;
