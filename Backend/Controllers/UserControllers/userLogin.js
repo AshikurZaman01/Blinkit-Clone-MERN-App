@@ -12,7 +12,7 @@ const userLogin = async (req, res) => {
             res.status(400).json({ success: false, message: "Please enter all fields" })
         }
 
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findOne({ email }).select("+password");
         if (!user) {
             return res.status(400).json({ success: false, message: "User not found" })
         }

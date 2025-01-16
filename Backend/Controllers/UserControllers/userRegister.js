@@ -16,7 +16,7 @@ const userRegister = async (req, res) => {
         }
 
         // Check if User Already Exists
-        const userExists = await UserModel.findOne({ email });
+        const userExists = await UserModel.findOne({ email }).select("+password");
         if (userExists) {
             return res.status(400).json({
                 success: false,

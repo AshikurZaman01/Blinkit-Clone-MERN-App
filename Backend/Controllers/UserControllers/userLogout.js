@@ -7,8 +7,8 @@ const userLogout = async (req, res) => {
             sameSite: 'none',
         }
 
-        req.clearCookie('AccessToken', cookieOptions);
-        req.clearCookie('RefressToken', cookieOptions);
+        res.clearCookie('AccessToken', cookieOptions);
+        res.clearCookie('RefressToken', cookieOptions);
 
         res.status(200).json({
             message: "User Logout Successfully",
