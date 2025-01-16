@@ -8,6 +8,8 @@ const uploadUserImage = require('../../Controllers/UserControllers/uploadUserIma
 const upload = require('../../MiddleWear/Multer/multer');
 const userDetailsUpdate = require('../../Controllers/UserControllers/userDetailsUpdate');
 const userForgotPassword = require('../../Controllers/UserControllers/userForgotPassword');
+const verifyForgotPasswordOTP = require('../../Controllers/UserControllers/verifyForgotPasswordOTP');
+const resetPassword = require('../../Controllers/UserControllers/resetPassword');
 const router = express.Router();
 
 
@@ -24,6 +26,12 @@ router.put('/uploadUserImage', verifiedAuth, upload.single('image'), uploadUserI
 router.put('/userDetailsUpdate', verifiedAuth, userDetailsUpdate);
 
 router.put('/userForgotPassword', userForgotPassword);
+
+router.put('/verifyForgotPasswordOTP', verifyForgotPasswordOTP);
+
+router.put('/resetPassword', resetPassword);
+
+
 
 
 

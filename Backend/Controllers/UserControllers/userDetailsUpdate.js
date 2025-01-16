@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const userDetailsUpdate = async (req, res) => {
     try {
         const userId = req.userId;
-        const { name, email, mobile, password, oldPassword } = req.body;
+        const { name, email, mobile, password } = req.body;
 
         // Check if the user exists
         const user = await UserModel.findById(userId).select("+password");
@@ -12,18 +12,9 @@ const userDetailsUpdate = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found." });
         }
 
-        // Check if updating the password
+        // Hash new password if provided
         let hashPassword = user.password;
         if (password) {
-            if (!oldPassword) {
-                return res.status(400).json({ success: false, message: "Old password is required to update your password." });
-            }
-
-            const isMatch = await bcrypt.compare(oldPassword, user.password);
-            if (!isMatch) {
-                return res.status(400).json({ success: false, message: "Old password is incorrect." });
-            }
-
             hashPassword = await bcrypt.hash(password, 10);
         }
 
