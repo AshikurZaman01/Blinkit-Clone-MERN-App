@@ -1,5 +1,6 @@
 const sendEmail = require("../../Config/sendEmail/sendEmail");
 const UserModel = require("../../Models/UserSchema/userSchema");
+const forgotPasswordOTPTemplate = require("../../Utils/forgotPasswordOTPTemplate");
 const generateOTP = require("../../Utils/GenerateOTP/generateOTP");
 
 const userForgotPassword = async (req, res) => {
@@ -23,7 +24,7 @@ const userForgotPassword = async (req, res) => {
 
         // Prepare email content
         const subject = "Password Reset OTP";
-        const html = `<p>Your OTP for password reset is: <strong>${otp}</strong>. It expires in 1 hour.</p>`;
+        const html = forgotPasswordOTPTemplate({ name: user.name, otp });
 
         // Send email with the generated OTP
         const emailSent = await sendEmail(email, subject, html);

@@ -23,7 +23,7 @@ router.put('/uploadUserImage', verifiedAuth, upload.single('image'), uploadUserI
 
 router.put('/userDetailsUpdate', verifiedAuth, userDetailsUpdate);
 
-router.post('/userForgotPassword', userForgotPassword);
+router.put('/userForgotPassword', userForgotPassword);
 
 
 
