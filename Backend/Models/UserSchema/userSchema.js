@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [5, 'Password must be at least 5 characters long']
+    },
     avatar: {
         type: String,
         default: ""

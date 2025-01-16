@@ -1,6 +1,6 @@
 const bcryptjs = require('bcryptjs');
 const UserModel = require('../../Models/UserSchema/userSchema');
-const sendEmail = require('../sendEmail/sendEmail');
+const sendEmail = require('../../Config/sendEmail/sendEmail');
 const verifyEmailTemplate = require('../../Utils/verifyEmailTemplate');
 
 const userRegister = async (req, res) => {

@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const dotEnv = require('dotenv');
-const connectDB = require('./DBConfig/DBConn');
+const connectDB = require('./Config/DBConfig/DBConn');
 dotEnv.config();
 
 app.use(cors({
