@@ -43,18 +43,12 @@ const Header = () => {
 
                     </div>
 
-                ) 
+                )
             }
-
-
-
 
             <div className="container mx-auto px-2 lg:hidden">
                 <SearchBar></SearchBar>
             </div>
-
-
-
 
         </header>
     )
