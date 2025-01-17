@@ -1,0 +1,24 @@
+{
+  "name": "blinkit-clone-mern-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "BackEnd": "cd Backend && npx nodemon",
+    "Frontend": "cd Frontend && npm run dev",
+
+    "dev": "concurrently \"npm run BackEnd\" \"npm run Frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
+  }
+}

@@ -10,6 +10,7 @@ const userDetailsUpdate = require('../../Controllers/UserControllers/userDetails
 const userForgotPassword = require('../../Controllers/UserControllers/userForgotPassword');
 const verifyForgotPasswordOTP = require('../../Controllers/UserControllers/verifyForgotPasswordOTP');
 const resetPassword = require('../../Controllers/UserControllers/resetPassword');
+const refreshToken = require('../../Controllers/UserControllers/refreshToken');
 const router = express.Router();
 
 
@@ -30,6 +31,12 @@ router.put('/userForgotPassword', userForgotPassword);
 router.put('/verifyForgotPasswordOTP', verifyForgotPasswordOTP);
 
 router.put('/resetPassword', resetPassword);
+
+router.post('/refreshToken', refreshToken);
+
+
+
+
 
 
 
