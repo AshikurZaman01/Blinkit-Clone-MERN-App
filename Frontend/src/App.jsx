@@ -1,8 +1,18 @@
-import AppRoutes from "./Routes/AppRoutes"
+import { Outlet } from 'react-router-dom'
+import Header from './Components/Header/Header'
+import Footer from './Components/Footer/Footer'
 
 const App = () => {
   return (
-    <AppRoutes></AppRoutes>
+    <>
+      <Header></Header>
+
+      <main>
+        <Outlet />
+      </main>
+
+      <Footer></Footer>
+    </>
   )
 }
 
