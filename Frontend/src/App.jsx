@@ -7,7 +7,7 @@ const App = () => {
     <>
       <Header></Header>
 
-      <main>
+      <main className='min-h-[78vh]'>
         <Outlet />
       </main>
 
