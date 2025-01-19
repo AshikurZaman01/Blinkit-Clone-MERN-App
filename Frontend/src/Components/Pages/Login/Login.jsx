@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Axios from "../../../Common/BaseApi/Axios";
-import summaryAPI from "../../../Common/BaseApi/baseAli";
 import toast from "react-hot-toast";
+import { usersAPI } from "../../../Common/BaseApi/baseAli";
 
 const Login = () => {
 
@@ -14,7 +14,6 @@ const Login = () => {
         password: ""
     });
     const [isLoading, setIsLoading] = useState(false);
-
     const isValid = Object.values(data).every((el) => el.trim() !== "");
 
     const handleSubmit = async (e) => {
@@ -24,7 +23,7 @@ const Login = () => {
         try {
 
             const response = await Axios({
-                ...summaryAPI.login,
+                ...usersAPI.login,
                 data: data
             })
 
@@ -105,6 +104,12 @@ const Login = () => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
+
+                    {/* Forgot Password */}
+                    <p className="text-sm text-start text-gray-500 mt-0">
+                        <Link to="/forgot-password" className="text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >Forgot Password?</Link>
+                    </p>
 
                     {/* Submit Button */}
                     <button

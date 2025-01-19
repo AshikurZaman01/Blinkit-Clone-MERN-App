@@ -4,6 +4,7 @@ import App from '../App';
 import SearchPage from '../Components/Header/SearchBar/items/SearchPage';
 import Login from '../Components/Pages/Login/Login';
 import Register from '../Components/Pages/Register/Register';
+import ForgotPassword from '../Components/Pages/ForgotPassword/ForgotPassword';
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: '/register',
         element: <Register />
+    },
+    {
+        path: '/forgot-password',
+        element: <ForgotPassword />
     }
 ])
 

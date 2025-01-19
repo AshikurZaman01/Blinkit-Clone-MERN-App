@@ -1,7 +1,7 @@
 
 export const baseURL = "http://localhost:3000";
 
-const summaryAPI = {
+const usersAPI = {
     register: {
         url: "/api/v1/user/userRegister",
         method: 'post'
@@ -48,4 +48,4 @@ const summaryAPI = {
     }
 }
 
-export default summaryAPI;
+export  { usersAPI };

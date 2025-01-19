@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast"
 import Axios from "../../../Common/BaseApi/Axios";
-import summaryAPI from "../../../Common/BaseApi/baseAli";
+import { usersAPI } from "../../../Common/BaseApi/baseAli";
+import ForgotPassword from "../ForgotPassword/ForgotPassword";
 
 const Register = () => {
 
@@ -33,7 +34,7 @@ const Register = () => {
             }
 
             const response = await Axios({
-                ...summaryAPI.register,
+                ...usersAPI.register,
                 data: data
             })
 
@@ -184,12 +185,20 @@ const Register = () => {
                         </button>
                     </div>
 
+                    {/* Forgot Password */}
+                    <p className="text-sm text-start text-gray-500 mt-0">
+                        <Link to="/forgot-password" className="text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >Forgot Password?</Link>
+                    </p>
+
                     <button
                         type="submit" disabled={!isValid}
                         className={`${isValid ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"} text-white font-semibold py-2 sm:py-3 rounded-lg hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200`}
                     >
                         {isLoading ? <span className="loading loading-dots loading-md"></span> : "Create Account"}
                     </button>
+
+
 
                     <p className="text-sm text-center text-gray-500 mt-4">
                         Already have an account?{" "}
