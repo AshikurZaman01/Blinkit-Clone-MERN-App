@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Axios from "../../../../Common/BaseApi/Axios";
+import { usersAPI } from "../../../../Common/BaseApi/baseAli";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
-   
     const [data, setData] = useState({
         email: "",
         newPassword: "",
@@ -14,17 +16,16 @@ const ResetPassword = () => {
         newPassword: false,
         confirmPassword: false,
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-       
         if (!(location?.state?.data?.success)) {
             navigate("/");
         }
 
-        // Set email from state if available
         if (location?.state?.email) {
             setData((prev) => ({
                 ...prev,
@@ -41,14 +42,44 @@ const ResetPassword = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (data.newPassword !== data.confirmPassword) {
             alert("Passwords do not match!");
             return;
         }
-        console.log("Password reset data:", data);
-       
+
+        setIsLoading(true);
+
+        try {
+            const response = await Axios({
+                ...usersAPI.resetPassword,
+                data: data,
+            });
+
+            console.log("Password reset response:", response);
+
+            if (response.data.success) {
+                toast.success(response.data.message);
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
+
+                setData({
+                    newPassword: "",
+                    confirmPassword: "",
+                })
+
+            }
+
+
+        } catch (error) {
+            console.error("Password reset error:", error);
+            toast.error(error.response?.data?.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const passwordsMatch =
@@ -133,7 +164,7 @@ const ResetPassword = () => {
                             required
                         />
                         {passwordsMatch && (
-                            <span className="absolute right-10 top-[38px] text-blue-500 text-lg font-bold">
+                            <span className="absolute right-10 top-[38px] text-green-500 text-lg font-bold transform scale-0 opacity-0 animate-fade-in-scale">
                                 ✔
                             </span>
                         )}
@@ -154,17 +185,17 @@ const ResetPassword = () => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        disabled={
-                            !data.newPassword ||
-                            !data.confirmPassword ||
-                            data.newPassword !== data.confirmPassword
-                        }
+                        disabled={isLoading || !passwordsMatch}
                         className={`${passwordsMatch
                             ? "bg-blue-500 hover:bg-blue-600"
                             : "bg-gray-400 cursor-not-allowed"
                             } text-white font-semibold py-2 sm:py-3 rounded-lg hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200`}
                     >
-                        Reset Password
+                        {isLoading ? (
+                            <span className="loading loading-dots loading-md"></span>
+                        ) : (
+                            "Reset Password"
+                        )}
                     </button>
                 </form>
             </div>
