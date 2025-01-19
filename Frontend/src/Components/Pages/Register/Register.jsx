@@ -1,8 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; 
+import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import toast from "react-hot-toast"
+import Axios from "../../../Common/BaseApi/Axios";
+import summaryAPI from "../../../Common/BaseApi/baseAli";
 
 const Register = () => {
+
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState({
+        password: false,
+        confirmPassword: false,
+    });
+    const [isLoading, setIsLoading] = useState(false);
+
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -10,17 +21,47 @@ const Register = () => {
         confirmPassword: ""
     });
 
-    const [showPassword, setShowPassword] = useState({
-        password: false,
-        confirmPassword: false,
-    });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(data);
+
+        setIsLoading(true);
+        try {
+            if (data.password !== data.confirmPassword) {
+                toast.error('Password and confirm password do not match.');
+                return;
+            }
+
+            const response = await Axios({
+                ...summaryAPI.register,
+                data: data
+            })
+
+            if (response.data.success) {
+                toast.success(response.data.message);
+
+                setData({
+                    name: "",
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                });
+                navigate('/login');
+            }
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }
+
+        finally {
+            setIsLoading(false);
+        }
     };
 
     const passwordsMatch = data.password && data.confirmPassword && data.password === data.confirmPassword;
+
+    const isValid = Object.values(data).every((el) => el.trim() !== "");
 
     return (
         <section className="bg-gray-300 min-h-screen flex items-center justify-center">
@@ -32,6 +73,7 @@ const Register = () => {
                 </h1>
 
                 <form onSubmit={handleSubmit} className="grid gap-5">
+
                     <div className="grid gap-2">
                         <label
                             htmlFor="name"
@@ -101,7 +143,7 @@ const Register = () => {
                             }
                             className="absolute right-3 top-[38px] text-gray-500 hover:text-blue-500 focus:outline-none"
                         >
-                            {showPassword.password ? <FaEyeSlash /> : <FaEye />} 
+                            {showPassword.password ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
 
@@ -138,15 +180,15 @@ const Register = () => {
                             }
                             className="absolute right-3 top-[38px] text-gray-500 hover:text-blue-500 focus:outline-none"
                         >
-                            {showPassword.confirmPassword ? <FaEyeSlash /> : <FaEye />} 
+                            {showPassword.confirmPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
 
                     <button
-                        type="submit"
-                        className="bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200"
+                        type="submit" disabled={!isValid}
+                        className={`${isValid ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"} text-white font-semibold py-2 sm:py-3 rounded-lg hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200`}
                     >
-                        Create Account
+                        {isLoading ? <span className="loading loading-dots loading-md"></span> : "Create Account"}
                     </button>
 
                     <p className="text-sm text-center text-gray-500 mt-4">

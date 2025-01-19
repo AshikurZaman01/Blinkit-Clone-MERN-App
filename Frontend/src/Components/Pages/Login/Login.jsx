@@ -1,33 +1,67 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Axios from "../../../Common/BaseApi/Axios";
+import summaryAPI from "../../../Common/BaseApi/baseAli";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [data, setData] = useState({
         email: "",
         password: ""
     });
+    const [isLoading, setIsLoading] = useState(false);
 
+    const isValid = Object.values(data).every((el) => el.trim() !== "");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(data);
+        setIsLoading(true);
+
+        try {
+
+            const response = await Axios({
+                ...summaryAPI.login,
+                data: data
+            })
+
+            if (response.data.success) {
+                toast.success(response.data.message);
+
+                setData({
+                    email: "",
+                    password: ""
+                })
+                navigate("/");
+            }
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <section className="bg-gray-300 min-h-screen flex items-center justify-center">
-            <div className="bg-white shadow-2xl rounded-xl p-8 max-w-md w-full transform transition-all duration-300 hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)]">
-                <h1 className="text-3xl font-extrabold text-gray-800 text-center mb-6">
-                    Welcome Back
+        <section className="bg-gray-300 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+
+            <div className="bg-white shadow-2xl rounded-xl p-6 sm:p-8 lg:p-12 max-w-md w-full sm:max-w-[90%] md:max-w-lg lg:max-w-md transform transition-all duration-300 hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)]">
+
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800 text-center mb-6">
+                    Welcome To <span className="text-primary-200">Blink<span className='text-green-600'>it</span></span>
                 </h1>
 
                 <form onSubmit={handleSubmit} className="grid gap-5">
+
+                    {/* Email Input */}
                     <div className="grid gap-2">
                         <label
                             htmlFor="email"
-                            className="text-sm font-medium text-gray-600"
+                            className="text-sm sm:text-base font-medium text-gray-600"
                         >
                             Email
                         </label>
@@ -35,7 +69,7 @@ const Login = () => {
                             type="email"
                             name="email"
                             id="email"
-                            className="bg-gray-100 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
+                            className="bg-gray-100 border border-gray-300 rounded-lg p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
                             value={data.email}
                             onChange={(e) =>
                                 setData({ ...data, email: e.target.value })
@@ -44,10 +78,11 @@ const Login = () => {
                         />
                     </div>
 
+                    {/* Password Input with View Toggle */}
                     <div className="grid gap-2 relative">
                         <label
                             htmlFor="password"
-                            className="text-sm font-medium text-gray-600"
+                            className="text-sm sm:text-base font-medium text-gray-600"
                         >
                             Password
                         </label>
@@ -55,7 +90,7 @@ const Login = () => {
                             type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
-                            className="bg-gray-100 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
+                            className="bg-gray-100 border border-gray-300 rounded-lg p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
                             value={data.password}
                             onChange={(e) =>
                                 setData({ ...data, password: e.target.value })
@@ -64,23 +99,23 @@ const Login = () => {
                         />
                         <button
                             type="button"
-                            onClick={() =>
-                                setShowPassword((prev) => !prev)
-                            }
-                            className="absolute right-3 top-[38px] text-gray-500 hover:text-blue-500 focus:outline-none"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            className="absolute right-3 top-[38px] sm:top-[44px] text-gray-500 hover:text-blue-500 focus:outline-none"
                         >
-                            {showPassword ? <FaEyeSlash /> : <FaEye />} 
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
 
+                    {/* Submit Button */}
                     <button
-                        type="submit"
-                        className="bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200"
+                        type="submit" disabled={!isValid}
+                        className={`${isValid ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"} text-white font-semibold py-2 sm:py-3 rounded-lg hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200`}
                     >
-                        Log In
+                        {isLoading ? <span className="loading loading-dots loading-md"></span> : " Log In"}
                     </button>
 
-                    <p className="text-sm text-center text-gray-500 mt-4">
+                    {/* Footer */}
+                    <p className="text-sm sm:text-base text-center text-gray-500 mt-4">
                         Don't have an account?{" "}
                         <Link
                             to="/register"
