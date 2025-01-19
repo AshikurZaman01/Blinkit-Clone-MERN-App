@@ -5,13 +5,11 @@ import Axios from "../../../../Common/BaseApi/Axios";
 import { usersAPI } from "../../../../Common/BaseApi/baseAli";
 
 const VerifyForgotPasswordOTP = () => {
-
     const [data, setData] = useState({
         email: "",
         otp: "",
     });
     const [isLoading, setIsLoading] = useState(false);
-    const [redirecting, setRedirecting] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -29,18 +27,19 @@ const VerifyForgotPasswordOTP = () => {
 
             if (response.data.success) {
                 toast.success(response.data.message);
+
                 setData({
                     email: "",
                     otp: "",
                 });
 
-                // Show redirecting animation
-                setRedirecting(true);
-
-                // Redirect after 3 seconds
-                setTimeout(() => {
-                    navigate("/");
-                }, 3000);
+                navigate("/reset-password", {
+                    state: {
+                        data: response.data,
+                        email: data.email,
+                    },
+                });
+                setIsLoading(false);
             } else {
                 toast.error(response.data.message || "Failed to verify OTP.");
             }
@@ -55,22 +54,6 @@ const VerifyForgotPasswordOTP = () => {
 
     const isFormValid = data.email.trim() && data.otp.trim();
 
-    if (redirecting) {
-        return (
-            <section className="bg-gray-300 min-h-screen flex items-center justify-center">
-                <div className="bg-white shadow-2xl rounded-xl p-8 max-w-md w-full text-center">
-                    <h1 className="text-3xl font-extrabold text-gray-800 mb-6">
-                        Redirecting...
-                    </h1>
-                    <p className="text-gray-600 text-lg">Please wait while we take you to the home page.</p>
-                    <div className="mt-6">
-                        <span className="loading loading-spinner loading-lg text-blue-500"></span>
-                    </div>
-                </div>
-            </section>
-        );
-    }
-
     return (
         <section className="bg-gray-300 min-h-screen flex items-center justify-center">
             <div className="bg-white shadow-2xl rounded-xl p-8 max-w-md w-full transform transition-all duration-300 hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)]">
@@ -79,7 +62,7 @@ const VerifyForgotPasswordOTP = () => {
                 </h1>
 
                 <form onSubmit={handleSubmit} className="grid gap-5">
-
+                    {/* Email Input */}
                     <div className="grid gap-2">
                         <label htmlFor="email" className="text-sm font-medium text-gray-600">
                             Email

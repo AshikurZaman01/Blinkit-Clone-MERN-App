@@ -6,6 +6,7 @@ import Login from '../Components/Pages/Auth/Login/Login';
 import Register from '../Components/Pages/Auth/Register/Register';
 import ForgotPassword from '../Components/Pages/Auth/ForgotPassword/ForgotPassword';
 import VerifyForgotPasswordOTP from '../Components/Pages/Auth/VerifyForgotPasswordOTP/VerifyForgotPasswordOTP';
+import ResetPassword from '../Components/Pages/Auth/ResetPassword/ResetPassword';
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
     {
         path: '/verify-forgot-password-OTP',
         element: <VerifyForgotPasswordOTP />
+    },
+    {
+        path: '/reset-password',
+        element: <ResetPassword />
     }
 ])
 
