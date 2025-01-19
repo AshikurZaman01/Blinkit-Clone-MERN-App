@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
+
+    const [showPassword, setShowPassword] = useState(false);
     const [data, setData] = useState({
         email: "",
         password: ""
     });
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -40,7 +44,7 @@ const Login = () => {
                         />
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="grid gap-2 relative">
                         <label
                             htmlFor="password"
                             className="text-sm font-medium text-gray-600"
@@ -48,7 +52,7 @@ const Login = () => {
                             Password
                         </label>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
                             className="bg-gray-100 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
@@ -58,6 +62,15 @@ const Login = () => {
                             }
                             placeholder="Enter your password"
                         />
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowPassword((prev) => !prev)
+                            }
+                            className="absolute right-3 top-[38px] text-gray-500 hover:text-blue-500 focus:outline-none"
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />} 
+                        </button>
                     </div>
 
                     <button

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 
 const Register = () => {
     const [data, setData] = useState({
@@ -7,6 +8,11 @@ const Register = () => {
         email: "",
         password: "",
         confirmPassword: ""
+    });
+
+    const [showPassword, setShowPassword] = useState({
+        password: false,
+        confirmPassword: false,
     });
 
     const handleSubmit = (e) => {
@@ -67,7 +73,7 @@ const Register = () => {
                         />
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="grid gap-2 relative">
                         <label
                             htmlFor="password"
                             className="text-sm font-medium text-gray-600"
@@ -75,7 +81,7 @@ const Register = () => {
                             Password
                         </label>
                         <input
-                            type="password"
+                            type={showPassword.password ? "text" : "password"}
                             name="password"
                             id="password"
                             className="bg-gray-100 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
@@ -85,6 +91,18 @@ const Register = () => {
                             }
                             placeholder="Enter your password"
                         />
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowPassword((prev) => ({
+                                    ...prev,
+                                    password: !prev.password,
+                                }))
+                            }
+                            className="absolute right-3 top-[38px] text-gray-500 hover:text-blue-500 focus:outline-none"
+                        >
+                            {showPassword.password ? <FaEyeSlash /> : <FaEye />} 
+                        </button>
                     </div>
 
                     <div className="grid gap-2 relative">
@@ -95,7 +113,7 @@ const Register = () => {
                             Confirm Password
                         </label>
                         <input
-                            type="password"
+                            type={showPassword.confirmPassword ? "text" : "password"}
                             name="confirmPassword"
                             id="confirmPassword"
                             className="bg-gray-100 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
@@ -106,10 +124,22 @@ const Register = () => {
                             placeholder="Confirm your password"
                         />
                         {passwordsMatch && (
-                            <span className="absolute right-3 top-[38px] text-blue-500 text-lg font-bold">
+                            <span className="absolute right-10 top-[38px] text-blue-500 text-lg font-bold">
                                 ✔
                             </span>
                         )}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowPassword((prev) => ({
+                                    ...prev,
+                                    confirmPassword: !prev.confirmPassword,
+                                }))
+                            }
+                            className="absolute right-3 top-[38px] text-gray-500 hover:text-blue-500 focus:outline-none"
+                        >
+                            {showPassword.confirmPassword ? <FaEyeSlash /> : <FaEye />} 
+                        </button>
                     </div>
 
                     <button
