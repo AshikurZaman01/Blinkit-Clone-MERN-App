@@ -9,4 +9,6 @@
 
 body{
     font-family: "Lato", serif;
+
+    @apply bg-blue-50;
 }

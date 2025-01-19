@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
     const [data, setData] = useState({
+        name: "",
         email: "",
-        password: ""
+        password: "",
+        confirmPassword: ""
     });
 
     const handleSubmit = (e) => {
@@ -14,12 +16,35 @@ const Login = () => {
 
     return (
         <section className="bg-gray-300 min-h-screen flex items-center justify-center">
+
             <div className="bg-white shadow-2xl rounded-xl p-8 max-w-md w-full transform transition-all duration-300 hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)]">
+
                 <h1 className="text-3xl font-extrabold text-gray-800 text-center mb-6">
-                    Welcome Back
+                    Create an Account
                 </h1>
 
                 <form onSubmit={handleSubmit} className="grid gap-5">
+                    <div className="grid gap-2">
+                        <label
+                            htmlFor="name"
+                            className="text-sm font-medium text-gray-600"
+                        >
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            autoFocus
+                            className="bg-gray-100 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
+                            value={data.name}
+                            onChange={(e) =>
+                                setData({ ...data, name: e.target.value })
+                            }
+                            placeholder="Enter your name"
+                        />
+                    </div>
+
                     <div className="grid gap-2">
                         <label
                             htmlFor="email"
@@ -60,20 +85,40 @@ const Login = () => {
                         />
                     </div>
 
+                    <div className="grid gap-2">
+                        <label
+                            htmlFor="confirmPassword"
+                            className="text-sm font-medium text-gray-600"
+                        >
+                            Confirm Password
+                        </label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            id="confirmPassword"
+                            className="bg-gray-100 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:shadow-md transition-all"
+                            value={data.confirmPassword}
+                            onChange={(e) =>
+                                setData({ ...data, confirmPassword: e.target.value })
+                            }
+                            placeholder="Confirm your password"
+                        />
+                    </div>
+
                     <button
                         type="submit"
                         className="bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200"
                     >
-                        Log In
+                        Create Account
                     </button>
 
                     <p className="text-sm text-center text-gray-500 mt-4">
-                        Don't have an account?{" "}
+                        Already have an account?{" "}
                         <Link
-                            to="/register"
+                            to="/login"
                             className="text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >
-                            Sign up
+                            Log in
                         </Link>
                     </p>
                 </form>
@@ -82,4 +127,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
