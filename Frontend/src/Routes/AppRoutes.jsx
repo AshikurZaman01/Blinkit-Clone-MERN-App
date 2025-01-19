@@ -2,9 +2,10 @@ import { createBrowserRouter } from 'react-router-dom'
 import Home from '../Components/Pages/Home/Home'
 import App from '../App';
 import SearchPage from '../Components/Header/SearchBar/items/SearchPage';
-import Login from '../Components/Pages/Login/Login';
-import Register from '../Components/Pages/Register/Register';
-import ForgotPassword from '../Components/Pages/ForgotPassword/ForgotPassword';
+import Login from '../Components/Pages/Auth/Login/Login';
+import Register from '../Components/Pages/Auth/Register/Register';
+import ForgotPassword from '../Components/Pages/Auth/ForgotPassword/ForgotPassword';
+import VerifyForgotPasswordOTP from '../Components/Pages/Auth/VerifyForgotPasswordOTP/VerifyForgotPasswordOTP';
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
         ]
     },
 
+    //Auth Routes
     {
         path: '/login',
         element: <Login />
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
     {
         path: '/forgot-password',
         element: <ForgotPassword />
+    },
+    {
+        path: '/verify-forgot-password-OTP',
+        element: <VerifyForgotPasswordOTP />
     }
 ])
 

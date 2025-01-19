@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Axios from "../../../Common/BaseApi/Axios";
+import Axios from "../../../../Common/BaseApi/Axios";
 import toast from "react-hot-toast";
-import { usersAPI } from "../../../Common/BaseApi/baseAli";
+import { usersAPI } from "../../../../Common/BaseApi/baseAli";
 
 const Login = () => {
 
@@ -106,7 +106,7 @@ const Login = () => {
                     </div>
 
                     {/* Forgot Password */}
-                    <p className="text-sm text-start text-gray-500 mt-0">
+                    <p className="text-sm text-right text-gray-500 mt-0">
                         <Link to="/forgot-password" className="text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >Forgot Password?</Link>
                     </p>
