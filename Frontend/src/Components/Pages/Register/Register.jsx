@@ -14,6 +14,8 @@ const Register = () => {
         console.log(data);
     };
 
+    const passwordsMatch = data.password && data.confirmPassword && data.password === data.confirmPassword;
+
     return (
         <section className="bg-gray-300 min-h-screen flex items-center justify-center">
 
@@ -85,7 +87,7 @@ const Register = () => {
                         />
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="grid gap-2 relative">
                         <label
                             htmlFor="confirmPassword"
                             className="text-sm font-medium text-gray-600"
@@ -103,6 +105,11 @@ const Register = () => {
                             }
                             placeholder="Confirm your password"
                         />
+                        {passwordsMatch && (
+                            <span className="absolute right-3 top-[38px] text-blue-500 text-lg font-bold">
+                                ✔
+                            </span>
+                        )}
                     </div>
 
                     <button
