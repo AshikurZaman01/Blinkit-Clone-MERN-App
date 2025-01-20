@@ -22,6 +22,11 @@ const usersAPI = {
         method: 'put'
     },
 
+    userDetails: {
+        url: "/api/v1/user/loginUserDetails",
+        method: 'get'
+    },
+
     userDetailsUpdate: {
         url: "/api/v1/user/userDetailsUpdate",
         method: 'put'
@@ -48,4 +53,4 @@ const usersAPI = {
     }
 }
 
-export  { usersAPI };
+export { usersAPI };

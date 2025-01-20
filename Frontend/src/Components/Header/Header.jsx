@@ -4,8 +4,12 @@ import SearchBar from "./SearchBar/SearchBar";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BsCart4 } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+
+    const user = useSelector((state) => state.User);
+    console.log(user);
 
     // Custom hook to check if the device is mobile
     const isMobile = useMobile();

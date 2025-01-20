@@ -21,7 +21,6 @@ const Login = () => {
         setIsLoading(true);
 
         try {
-
             const response = await Axios({
                 ...usersAPI.login,
                 data: data
@@ -29,6 +28,9 @@ const Login = () => {
 
             if (response.data.success) {
                 toast.success(response.data.message);
+
+                localStorage.setItem("AccessToken", response?.data?.data?.AccessToken);
+                localStorage.setItem("RefressToken", response?.data?.data?.RefressToken);
 
                 setData({
                     email: "",

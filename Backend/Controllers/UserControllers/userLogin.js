@@ -28,12 +28,16 @@ const userLogin = async (req, res) => {
 
         const accessToken = await generateToken(user._id);
         const refreshToken = await generateRefressToken(user._id);
+
+        const updateUser = await UserModel.findByIdAndUpdate(user._id,
+            { lastLoginDate: new Date() }, { new: true }
+        )
+
         const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'none',
         }
-
 
         res.cookie('AccessToken', accessToken, cookieOptions)
         res.cookie('RefressToken', refreshToken, cookieOptions)

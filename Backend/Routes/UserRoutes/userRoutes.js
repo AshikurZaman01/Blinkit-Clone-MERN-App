@@ -11,6 +11,7 @@ const userForgotPassword = require('../../Controllers/UserControllers/userForgot
 const verifyForgotPasswordOTP = require('../../Controllers/UserControllers/verifyForgotPasswordOTP');
 const resetPassword = require('../../Controllers/UserControllers/resetPassword');
 const refreshToken = require('../../Controllers/UserControllers/refreshToken');
+const loginUserDetails = require('../../Controllers/UserControllers/loginUserDetails');
 const router = express.Router();
 
 
@@ -23,6 +24,8 @@ router.get('/userLogout', verifiedAuth, userLogout);
 router.post('/verifyEmailofUser', verifyEmail);
 
 router.put('/uploadUserImage', verifiedAuth, upload.single('image'), uploadUserImage)
+
+router.get('/loginUserDetails', verifiedAuth, loginUserDetails);
 
 router.put('/userDetailsUpdate', verifiedAuth, userDetailsUpdate);
 
