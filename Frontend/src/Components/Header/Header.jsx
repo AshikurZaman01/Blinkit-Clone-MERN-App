@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 const Header = () => {
 
     const user = useSelector((state) => state.User);
-    console.log(user);
 
     // Custom hook to check if the device is mobile
     const isMobile = useMobile();
