@@ -7,12 +7,12 @@ import { useDispatch } from "react-redux";
 import { setUserDetails } from "./Redux/features/userSlice";
 
 const App = () => {
+
   const dispatch = useDispatch();
 
   const fetchUser = useCallback(async () => {
 
     try {
-
       const userData = await fetchUserDetails();
 
       if (userData?.success && userData.data) {
@@ -20,9 +20,7 @@ const App = () => {
         dispatch(setUserDetails(userData.data));
 
       } else {
-
         console.error("Failed to fetch user details:", userData?.message);
-
       }
 
     } catch (error) {

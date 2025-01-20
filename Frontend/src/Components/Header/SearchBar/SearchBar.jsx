@@ -40,7 +40,7 @@ const SearchBar = () => {
                     <button className="flex justify-center items-center h-full p-3 text-neutral-700 group-focus-within:text-primary-200">
                         <IoSearch size={22} />
                     </button>
-                    
+
                 )}
             </div>
 

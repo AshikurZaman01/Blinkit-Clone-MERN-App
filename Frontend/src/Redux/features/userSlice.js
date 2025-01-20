@@ -5,6 +5,15 @@ const initialState = {
     _id: "",
     name: "",
     email: "",
+    avatar: "",
+    mobile: "",
+    verify_email: "",
+    lastLoginDate: "",
+    status: "",
+    addressDetails: [],
+    shoppingCart: [],
+    orderHistory: [],
+    role: ""
 }
 
 const userSlice = createSlice({
@@ -14,8 +23,8 @@ const userSlice = createSlice({
     reducers: {
 
         setUserDetails: (state, action) => {
-            state = { ...action.payload }
-        }
+            Object.assign(state, action.payload); 
+        },
     }
 })
 
