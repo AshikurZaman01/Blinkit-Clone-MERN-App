@@ -40,7 +40,6 @@ Axios.interceptors.response.use(
 
             localStorage.removeItem("AccessToken");
             localStorage.removeItem("RefreshToken");
-            window.location.href = "/login";
         }
         return Promise.reject(error);
     }

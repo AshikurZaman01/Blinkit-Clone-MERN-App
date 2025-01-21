@@ -7,30 +7,29 @@ import Axios from "../../../Common/BaseApi/Axios";
 import { usersAPI } from "../../../Common/BaseApi/baseAli";
 import toast from "react-hot-toast";
 
-
 const UserMenu = ({ user, onLoginClick }) => {
-
     const [openUserMenu, setUserMenu] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-        try {
+        setLoading(true);
+        localStorage.setItem("AccessToken", "");
+        localStorage.setItem("RefressToken", "");
 
-            const response = await Axios({
-                ...usersAPI.logout
-            })
+        try {
+            const response = await Axios({ ...usersAPI.logout });
 
             if (response.data.success) {
                 setUserMenu(false);
                 toast.success(response.data.message);
-                navigate('/');
-
+                navigate("/");
             }
-            localStorage.setItem('AccessToken', "");
-            localStorage.setItem('RefressToken', "");
-
         } catch (error) {
-            console.log(error);
+            console.error(error);
+            toast.error("Logout failed. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -41,8 +40,6 @@ const UserMenu = ({ user, onLoginClick }) => {
         >
             <div className="flex items-center gap-2">
                 <FaUser className="w-[20px] h-[20px]" />
-
-                {/* Arrow animation */}
                 <motion.div
                     initial={{ rotate: 0 }}
                     animate={{ rotate: openUserMenu ? 180 : 0 }}
@@ -52,7 +49,7 @@ const UserMenu = ({ user, onLoginClick }) => {
                 </motion.div>
             </div>
 
-            {/* Dropdown menu animation */}
+            {/* Dropdown menu */}
             {openUserMenu && (
                 <motion.div
                     className="absolute top-16 right-0 bg-white text-gray-800 min-w-[200px] shadow-lg rounded-2xl py-4 px-5 z-50"
@@ -79,13 +76,21 @@ const UserMenu = ({ user, onLoginClick }) => {
                         >
                             Saved Addresses
                         </Link>
-
-                        {/* Logout button */}
                         <button
                             onClick={handleLogout}
-                            className="w-full text-sm text-red-600 hover:bg-red-200 py-2 px-4 rounded-full transition-all duration-300"
+                            className="w-full text-sm text-red-600 hover:bg-red-200 py-2 px-4 rounded-full transition-all duration-300 flex items-center justify-center"
+                            disabled={isLoading}
                         >
-                            Logout
+                            {isLoading ? (
+                                <motion.div
+                                    className="w-5 h-5 border-2 border-t-transparent border-red-600 rounded-full animate-spin"
+                                    initial={{ rotate: 0 }}
+                                    animate={{ rotate: 360 }}
+                                    transition={{ repeat: Infinity, duration: 1 }}
+                                ></motion.div>
+                            ) : (
+                                "Logout"
+                            )}
                         </button>
                     </div>
                 </motion.div>

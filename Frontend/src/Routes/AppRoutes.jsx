@@ -7,6 +7,7 @@ import Register from '../Components/Pages/Auth/Register/Register';
 import ForgotPassword from '../Components/Pages/Auth/ForgotPassword/ForgotPassword';
 import VerifyForgotPasswordOTP from '../Components/Pages/Auth/VerifyForgotPasswordOTP/VerifyForgotPasswordOTP';
 import ResetPassword from '../Components/Pages/Auth/ResetPassword/ResetPassword';
+import UserMenuMobile from '../Components/Header/UserMenu/UserMenuMobile';
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
     {
         path: '/reset-password',
         element: <ResetPassword />
+    },
+    {
+        path: '/userMobile',
+        element: <UserMenuMobile></UserMenuMobile>
     }
 ])
 
