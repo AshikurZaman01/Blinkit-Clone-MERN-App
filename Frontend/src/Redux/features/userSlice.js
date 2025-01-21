@@ -23,11 +23,13 @@ const userSlice = createSlice({
     reducers: {
 
         setUserDetails: (state, action) => {
-            Object.assign(state, action.payload); 
+            Object.assign(state, action.payload);
         },
+
+        logoutUser: () => initialState,
     }
 })
 
-export const { setUserDetails } = userSlice.actions;
+export const { setUserDetails, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;
